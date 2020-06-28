@@ -1,0 +1,47 @@
+import java.util.Arrays;
+
+public class demo5 {
+    //堆排序
+    public static void HeapSort(int[] s) {
+        //建堆
+        int lastLeaf = (s.length - 2) >> 1;
+        for (int root = lastLeaf; root >= 0; root--) {
+            //从lastLeaf到root的位置不断向下调整
+            shiftDown(s, root, s.length);
+        }
+        int end = s.length - 1;
+        while (end >= 0) {
+            swap(s, end, 0);
+            shiftDown(s, 0, end);
+            end--;
+        }
+    }
+
+    public static void shiftDown(int[] s, int parent, int size) {
+        int child = parent * 2 + 1;
+        while (child < size) {
+            if (child + 1 < size && s[child + 1] > s[child]) {
+                child = child + 1;
+            }
+            if (s[parent] < s[child]) {
+                swap(s, parent, child);
+                parent = child;
+                child = parent * 2 + 1;
+            } else {
+                break;
+            }
+        }
+    }
+
+    public static void swap(int[] s, int a, int b) {
+        int cnt = s[a];
+        s[a] = s[b];
+        s[b] = cnt;
+    }
+
+    public static void main(String[] args) {
+        int[] s = {4, 2, 12, 9, 0, 8, 5, 6, 1, 7, 3};
+        HeapSort(s);
+        System.out.println(Arrays.toString(s));
+    }
+}
