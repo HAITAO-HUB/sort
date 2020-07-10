@@ -1,0 +1,40 @@
+递归实现
+
+private static void mergeSort(int[] array,int left,int right,int[] tmp){
+        if(right-left>1){
+            int mid=left+((right-left)>>1);
+            //左半部分[left,mid)
+            mergeSort(array,left,mid,tmp);
+            //右半部分[mid,right)
+            mergeSort(array,mid,right,tmp);
+            //归并
+            mergeData(array,left,mid,right,tmp);
+            //归并结束后，有序序列存储在tmp中，将tmp数组中的数据复制到array中
+            System.arraycopy(tmp,left,array,left,right-left);
+        }
+    }
+    public static void mergeSort(int[] array){
+        int[] tmp=new int[array.length];
+        mergeSort(array,0,array.length,tmp);
+    }
+     public static void mergeData(int[] array,int left,int mid,int right,int[] tmp){
+        int index=left;
+        int begin1=left,end1=mid;
+        int begin2=mid,end2=right;
+        while (begin1<end1&&begin2<end2){
+            if(array[begin1]<=array[begin2]){
+                tmp[index++]=array[begin1++];
+            }
+            else{
+                tmp[index++]=array[begin2++];
+            }
+        }
+        //如果第一个区间中还有数据
+        while (begin1<end1){
+            tmp[index++]=array[begin1++];
+        }
+        //如果第二个区间有数据
+        while (begin2<end2){
+            tmp[index++]=array[begin2++];
+        }
+    }
